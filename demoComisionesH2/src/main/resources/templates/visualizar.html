@@ -1,0 +1,117 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<title th:text="'Visualizar Comision'">Visualizar</title>
+ <link rel="stylesheet" th:href="@{/style.css}">
+
+
+</head>
+
+<body>
+
+	<div class="container">
+
+	<div>
+			<td><a th:text="'Volver'" th:href="'/'+'listar'"
+				class="btn btn-secondary btn-sm">Volver</a></td>
+		</div>
+
+	<h1><th th:text="${comision.titulo}" scope="row">1</th></h1>
+		<table class="table table-striped table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Título</th>
+					<th scope="col">Estado</th>
+					<th scope="col">Descripción</th>
+					<th scope="col">Prioridad</th>
+					<th scope="col">Creador</th>
+					<th scope="col">Validador</th>
+					<th scope="col">Verificador</th>
+					<th scope="col">FechaValidación</th>
+					<th scope="col">FechaVerificación</th>
+					<!-- <th scope="col">Acciones</th> -->
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<th th:text="${comision.id}" scope="row">1</th>
+					<td th:text="${comision.titulo}">Título Comisión</td>
+					<td th:text="${comision.estado}">Estado</td>
+					<td th:text="${comision.descripcion}">Descripción</td>
+					<td th:text="${comision.prioridad}">Prioridad</td>
+					<td th:text="${comision.usuarioCreador?.nombre}">Creador</td>
+					<!-- Utilizando ?. -->
+
+					<td th:text="${comision.usuarioValidador?.nombre}">Validador</td>
+					<!-- Utilizando ?. -->
+					<td th:text="${comision.usuarioVerificador?.nombre}">Verificador</td>
+					<!-- Utilizando ?. -->
+					<td th:text="${comision.fechaValidacion}">FechaValidación</td>
+					<td th:text="${comision.fechaVerificacion}">FechaVerificacion</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+	<div class="container">
+		<h1 class="text-center">Participantes</h1>
+		<table class="table table-striped table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Apellido</th>
+					<th scope="col">Email</th>
+					<!-- <th scope="col">Acciones</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="participante : ${participantes}">
+					<th th:text="${participante.id}" scope="row">1</th>
+					<td th:text="${participante.nombre}">Nombre Participante</td>
+					<td th:text="${participante.apellidos}">Apellido</td>
+					<td th:text="${participante.email}">Email</td>
+
+				<!--	<td><a th:text="'Eliminar'"
+						th:href="'/eliminarParticipante/' + ${comision.id} + '/' + ${participante.id}"
+						class="btn btn-danger btn-sm">Eliminar</a></td>  -->
+
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+
+
+
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

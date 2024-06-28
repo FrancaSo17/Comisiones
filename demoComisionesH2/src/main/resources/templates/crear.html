@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Comisión</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Incluir el archivo CSS personalizado -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+   
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <td><a th:text="'Volver'" th:href="'/'+'listar'" class="btn btn-secondary btn-sm">Volver</a></td>
+        </div>
+        <form th:action="@{/crear/guardar}" th:object="${comision}" method="post">
+
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" class="form-control" id="titulo" th:field="*{titulo}" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}" required>
+            </div>
+         
+            <div class="form-group">
+                <label for="prioridad">Prioridad</label>
+                <input type="number" class="form-control" id="prioridad" th:field="*{prioridad}" min="1" max="3" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaComision">Fecha Comisión</label>
+                <input type="date" class="form-control" id="fechaComision" th:field="*{fechaComision}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="participantesDropdown">Participantes</label>
+                <div>
+                    <button type="button" id="toggleParticipantsDropdown" class="btn btn-secondary">Añadir participante</button>
+                    <select class="form-control d-none" id="participantesDropdown" multiple>
+                        <option th:each="participante : ${listar_participantes}" th:value="${participante.id}" th:text="${participante.nombre} + ' ' + ${participante.apellidos}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Participantes seleccionados:</label>
+                    <ul id="selectedParticipantsList"></ul>
+                    <input type="hidden" id="selectedParticipants" name="selectedParticipants" />
+                </div>
+            </div>
+
+            <script>
+                // Array para almacenar los participantes seleccionados
+                var selectedParticipants = [];
+
+                document.getElementById('toggleParticipantsDropdown').addEventListener('click', function() {
+                    var dropdown = document.getElementById('participantesDropdown');
+                    dropdown.classList.toggle('d-none');
+                });
+
+                document.getElementById('participantesDropdown').addEventListener('change', function() {
+                    var selectedOptions = this.selectedOptions;
+                    var selectedParticipantsList = document.getElementById('selectedParticipantsList');
+
+                    selectedParticipantsList.innerHTML = ''; // Limpiar la lista antes de agregar los nuevos participantes seleccionados
+                    selectedParticipants = []; // Limpiar el array de participantes seleccionados
+
+                    for (var i = 0; i < selectedOptions.length; i++) {
+                        var option = selectedOptions[i];
+                        var participantName = option.textContent;
+                        var participantId = option.value;
+
+                        var listItem = document.createElement('li');
+                        listItem.textContent = participantName;
+                        listItem.setAttribute('data-participant-id', participantId);
+
+                        selectedParticipantsList.appendChild(listItem);
+
+                        // Añadir el participante seleccionado al array
+                        selectedParticipants.push(participantId);
+                    }
+
+                    // Actualizar el valor del campo oculto con los IDs de los participantes seleccionados
+                    document.getElementById('selectedParticipants').value = selectedParticipants.join(',');
+                });
+            </script>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+</body>
+</html>

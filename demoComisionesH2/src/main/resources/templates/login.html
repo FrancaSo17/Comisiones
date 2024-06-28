@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/style2.css}">
+</head>
+<body>
+    <div class="login-wrapper">
+        <h1 class="tituloLogin">GESTOR DE COMISIONES </h1>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form th:action="@{/login}" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+            <div th:if="${error}" class="error-message">
+                <p th:text="${error}">error</p>
+            </div>
+            <a th:text="'Registrar'" th:href="@{/registro}" class="btn btn-secondary">Registrar</a>
+        </div>
+    </div>
+</body>
+</html>

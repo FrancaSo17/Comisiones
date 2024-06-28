@@ -1,0 +1,85 @@
+/* Variables CSS para colores */
+:root {
+  --bg-color: #f0ece3;
+  --primary-color: rgb(64, 0, 0) ;
+  --secondary-color: #6b4226;
+  --hover-color: #8b5a2b;
+  --text-color: #ffffff;
+  --light-bg: #d9dadb;
+  --hover-bg: #e2e8d5;
+}
+
+/* Estilos personalizados para la página de comisiones */
+body {
+  background-color: var(--bg-color);
+  font-family: 'Arial', sans-serif;
+}
+
+h1 {
+font-family: fantasy, sans-serif;
+  color: var(--primary-color);
+  font-size: 2.5em;
+  margin-bottom: 1em;
+  position: relative;
+}
+
+.table {
+  margin-top: 1em;
+  border-radius: 0.5em;
+  overflow: hidden;
+  width: 100%;
+  table-layout: auto; /* Use 'auto' instead of 'fixed' for better flexibility */
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  padding: 0.75em; /* Ensure adequate padding */
+  text-align: left; /* Ensure text is left-aligned */
+}
+
+.table thead {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: var(--light-bg);
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--hover-bg);
+}
+
+.btn {
+  margin-right: 0.5em;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--hover-color);
+}
+
+.container {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background-color: #ffffff;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  .container {
+    padding: 1em;
+  }
+
+  .table {
+    font-size: 0.9em;
+  }
+}
