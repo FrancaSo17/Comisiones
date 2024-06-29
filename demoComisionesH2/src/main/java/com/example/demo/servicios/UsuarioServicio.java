@@ -17,70 +17,63 @@ import com.example.demo.repositorio.UsuarioRepositorio;
 import jakarta.transaction.Transactional;
 
 @Service
-public class UsuarioServicio implements IServicioUsuario{
+public class UsuarioServicio implements IServicioUsuario {
 
 	Logger log = LoggerFactory.getLogger(ComisionServicio.class);
-	
+
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
-	
+
 	@Autowired
 	private UsersRepositorio usersRepositorio;
-	
+
 	@Autowired
 	private AuthoritiesRepository authoritiesRepository;
-	
-	
-	
+
 	@Override
 	@Transactional
 	public void registerUser(Users user, Usuario usuario) {
-	log.info("registerUser");
-	log.debug("user:", user.getUsername());
-	log.debug("usuario:", usuario);
-	
-	try {
-	user.setPassword(passwordEncoder().encode(user.getPassword()));
-	usersRepositorio.save(user);
-	
-	// Asignar rol (autoridad) al usuario
-				Authorities authorities = new Authorities();
-				authorities.setUsername(user.getUsername());
-				authorities.setAuthority("ROLE_USER");
-				
-				// Guardar la autoridad en la base de datos
-				authoritiesRepository.save(authorities);
+		log.info("registerUser");
+		log.debug("user:", user.getUsername());
+		log.debug("usuario:", usuario);
 
-				log.debug("authorities:", authorities);
+		try {
+			user.setPassword(passwordEncoder().encode(user.getPassword()));
+			usersRepositorio.save(user);
 
-				// datosUsuario.setUsername(user.getUsername());
+			Authorities authorities = new Authorities();
+			authorities.setUsername(user.getUsername());
+			authorities.setAuthority("ROLE_USER");
 
-				usuarioRepositorio.save(usuario);
+			// Guardar la autoridad en la base de datos
+			authoritiesRepository.save(authorities);
 
-				log.info("Usuario {} registrado con rol ROLE_USER", user.getUsername()+ " "+ user.getPassword()+"  nivelUsuario"+ usuario.getNivelUsuario());
-			} catch (Exception e) {
-				log.error("Error registro", e);
-			}
+			log.debug("authorities:", authorities);
+
+
+			usuarioRepositorio.save(usuario);
+
+			log.info("Usuario {} registrado con rol ROLE_USER",
+					user.getUsername() + " " + user.getPassword() + "  nivelUsuario" + usuario.getNivelUsuario());
+		} catch (Exception e) {
+			log.error("Error registro", e);
+		}
 	}
-	
+
 	@Override
 	public Usuario getUsuario(String username) {
-		
+		log.info("getUsuario");
 		return usuarioRepositorio.findUsuarioByUsername(username);
 	}
 
-	
-	private PasswordEncoder passwordEncoder() { return new
-			  BCryptPasswordEncoder(); }
-
-	public Usuario authenticate(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	private PasswordEncoder passwordEncoder() {
+		log.info("passwordEncoder");
+		return new BCryptPasswordEncoder();
 	}
 
-	
-
-	
-	
+	public Usuario authenticate(String username, String password) {
+		log.info("authenticate");
+		return null;
+	}
 
 }

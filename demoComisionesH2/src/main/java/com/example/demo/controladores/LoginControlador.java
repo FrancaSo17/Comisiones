@@ -18,31 +18,30 @@ import com.example.demo.servicios.UsuarioServicio;
 @Controller
 @RequestMapping(path = "/")
 public class LoginControlador {
-
 	
 	private final static Logger log = LoggerFactory.getLogger(LoginControlador.class);
-	
-	
+
 	@Autowired
 	private UsuarioServicio servicio;
 	
 	@GetMapping(value={"/","/login"})
 	public String login() {
-		log.info("login");
+		log.info("GETlogin");
 		return "login";
 	}
 	
 	@GetMapping("/registro")
 	public String registro(Model model) {
+		log.info("GETregistro");
 	    model.addAttribute("user", new Users());
 	    model.addAttribute("usuario", new Usuario());
 	    return "nuevoUsuario";
 	}
-
 	
 	@PostMapping("/login")
 	public String loginSubmit(@RequestParam String username, @RequestParam String password, Model model) {
-	    log.info("Procesando login para el usuario: " + username);
+		log.info("POSTloginSubmit");
+		log.info("Procesando login para el usuario: " + username);
 	    Usuario usuario = servicio.authenticate(username, password);
 	    if (usuario == null) {
 	        model.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
@@ -51,11 +50,9 @@ public class LoginControlador {
 	    return "listar";
 	}
 
-	
-	
 	 @PostMapping("/registrar")
 	public String guardarComision(Users user, Usuario usuario, Model model) {
-	   log.info("[GuardarUsuarioController]"+user);
+	   log.info("[POSTGuardarUsuarioController]");
 	   log.info("[usuario: ]"+user.getUsername());
 	      servicio.registerUser(user,usuario);
 

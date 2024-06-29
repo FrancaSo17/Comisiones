@@ -3,6 +3,8 @@ package com.example.demo.controladores;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,26 +21,32 @@ import com.example.demo.servicios.ParticipanteServicio;
 @RequestMapping("/participantes")
 public class ParticipanteControlador {
 
+	private final static Logger log = LoggerFactory.getLogger(LoginControlador.class);
+	
 	  @Autowired
 	    private ParticipanteServicio participanteServicio;
 
 	    @GetMapping
 	    public List<Participante> getAllParticipantes() {
+	    	log.info("GETgetAllParticipantes]");
 	        return participanteServicio.getAllParticipantes();
 	    }
 
 	    @GetMapping("/{id}")
 	    public Optional<Participante> getParticipanteById(@PathVariable Integer id) {
+	    	log.info("GETgetParticipanteById]");
 	        return participanteServicio.getParticipanteById(id);
 	    }
 
 	    @PostMapping
 	    public Participante createParticipante(@RequestBody Participante participante) {
+	    	log.info("POSTcreateParticipante]");
 	        return participanteServicio.saveParticipante(participante);
 	    }
 
 	    @DeleteMapping("/{id}")
 	    public void deleteParticipante(@PathVariable Integer id) {
+	    	log.info("DELETEdeleteParticipante]");
 	    	participanteServicio.deleteParticipante(id);
 	    }
 

@@ -1,4 +1,5 @@
 package com.example.demo.servicios;
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +22,7 @@ import com.example.demo.repositorio.ComisionRepositorio;
 public class ComisionServicio implements IServicioComision {
 
 	private final static Logger log = LoggerFactory.getLogger(ComisionServicio.class);
+
 	@Autowired
 	private ComisionRepositorio comisionRepositorio;
 
@@ -47,7 +49,8 @@ public class ComisionServicio implements IServicioComision {
 
 		List<Comision> comisionesSinValidar = comisiones.stream()
 				.filter(c -> c.isValidada() == false && c.isCancelada() == false)
-				.filter(c -> c.getUsuarioCreador().getNivelUsuario()< usuario.getNivelUsuario() || usuario.getNivelUsuario()==9)
+				.filter(c -> c.getUsuarioCreador().getNivelUsuario() < usuario.getNivelUsuario()
+						|| usuario.getNivelUsuario() == 9)
 				.collect(Collectors.toList());
 
 		Collections.sort(comisionesSinValidar, Comparator.comparingInt(Comision::getPrioridad));
@@ -63,7 +66,8 @@ public class ComisionServicio implements IServicioComision {
 		List<Comision> comisiones = comisionRepositorio.findAll();
 
 		List<Comision> comisionesSinV = comisiones.stream().filter(c -> c.isValidada() && !c.isVerificada())
-				.filter(c -> c.getUsuarioValidador().getNivelUsuario()< usuario.getNivelUsuario() || usuario.getNivelUsuario()==9)
+				.filter(c -> c.getUsuarioValidador().getNivelUsuario() < usuario.getNivelUsuario()
+						|| usuario.getNivelUsuario() == 9)
 				.collect(Collectors.toList());
 
 		Collections.sort(comisionesSinV, Comparator.comparingInt(Comision::getPrioridad));
@@ -108,36 +112,24 @@ public class ComisionServicio implements IServicioComision {
 		return comisionRepositorio.findById(id);
 	}
 
-	
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Importante
 	public Comision saveComision(Comision comision, Usuario usuarioCreador) {
-	    log.info("[saveComision]");
-	    System.out.println("Usuario autenticado: " + usuarioCreador.getUsername());
+		log.info("[saveComision]");
+		System.out.println("Usuario autenticado: " + usuarioCreador.getUsername());
 
-	   
-	    comision.setEstado("pendiente");
+		comision.setEstado("pendiente");
 
-	    // Obtén el usuario autenticado actualmente
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    log.info("------------"+ authentication.isAuthenticated());
-	  
-	   
-	        comision.setUsuarioCreador(usuarioCreador);
-	  
+		// Obtén el usuario autenticado actualmente
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		log.info("------------" + authentication.isAuthenticated());
 
-	    return comisionRepositorio.save(comision);
+		comision.setUsuarioCreador(usuarioCreador);
+
+		return comisionRepositorio.save(comision);
 	}
-	
-	
-	
+
 //	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
 
 	public void deleteComision(Integer id) {
 		log.info("[EliminarComision]");
@@ -147,13 +139,11 @@ public class ComisionServicio implements IServicioComision {
 	@Override
 	public List<Comision> listComision() {
 		log.info("[listComision]");
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	////
-	
+
 	@Override
 	public void validarComision(Integer id, Usuario usuario) {
 		log.info("[validarComision]");
@@ -245,13 +235,13 @@ public class ComisionServicio implements IServicioComision {
 		Optional<Comision> comision = comisionRepositorio.findById(id);
 		if (comision.isPresent()) {
 			Comision comisionObj = comision.get();
-			log.info("[Objeto Comision a Cancelar] "+ comisionObj.getUsuarioCancelador());
-			if(comisionObj.getUsuarioCancelador().getId()==usuario.getId()) {
+			log.info("[Objeto Comision a Cancelar] " + comisionObj.getUsuarioCancelador());
+			if (comisionObj.getUsuarioCancelador().getId() == usuario.getId()) {
 				comisionObj.setMotivoCancelacion(motivo);
-				log.info("[MOTIVO CANCELACION:] "+motivo );
+				log.info("[MOTIVO CANCELACION:] " + motivo);
 				comisionRepositorio.save(comisionObj);
 			}
-			
+
 		}
 	}
 

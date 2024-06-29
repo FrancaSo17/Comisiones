@@ -45,13 +45,13 @@ public class ParticipanteServicio implements IServicioParticipantes {
 
 	@Override
 	public List<Participante> getParticipanteByComisionId(Integer comisionId) {
+		log.info("getParticipanteByComisionId");
 		Comision comision= comisionServicio.getComisionById(comisionId).orElseThrow(()-> new RuntimeException("Comisión no encontrada"));
 		return participanteRepositorio.findByComision(comision);
 	}
 	 @Override
-	    public List<Participante> getParticipantesByIds(List<Integer> ids) {
-		 
-		 log.info("[GETPARTICIPANTES]");
+	    public List<Participante> getParticipantesByIds(List<Integer> ids) { 
+		 log.info("[getParticipantesByIds]");
 	        // Implementa la lógica para obtener participantes por IDs
 	        // Por ejemplo:
 	         return participanteRepositorio.findAllByIdIn(ids);

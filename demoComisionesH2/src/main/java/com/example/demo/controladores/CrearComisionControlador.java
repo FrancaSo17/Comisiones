@@ -41,56 +41,51 @@ public class CrearComisionControlador {
 
 	@GetMapping("/comision")
 	public String mostrarFormulario(Model model) {
-		// model.addAttribute("listar_usuarios", usuarioServicio.getAllUsuarios());
+		log.info("[GETmostrarFormulario]");
 		model.addAttribute("listar_participantes", participanteServicio.getAllParticipantes());
 		model.addAttribute("comision", new Comision());
 		return "crear";
 	}
 
-	 @PostMapping("/guardar")
-	    public String guardarComision(@ModelAttribute("comision") Comision comision, BindingResult bindingResult,
-	                                  Model model, @RequestParam("selectedParticipants") String selectedParticipants,
-	                                  Authentication authentication) {
+	@PostMapping("/guardar")
+	public String guardarComision(@ModelAttribute("comision") Comision comision, BindingResult bindingResult,
+			Model model, @RequestParam("selectedParticipants") String selectedParticipants,
+			Authentication authentication) {
+		log.info("[POSTguardarComision]");
+		if (authentication == null || !authentication.isAuthenticated()) {
+			throw new IllegalStateException("Controlador No se encontró un usuario autenticado.");
+		}
 
-	        if (authentication == null || !authentication.isAuthenticated()) {
-	            throw new IllegalStateException("Controlador No se encontró un usuario autenticado.");
-	        }
+		// Obtener el nombre de usuario del usuario autenticado
+		String username = authentication.getName();
+		log.info("Usuario que está creando la comisión: " + username);
+		// Obtener el objeto Usuario desde el servicio de usuarios
+		Usuario usuarioCreador = usuarioServicio.getUsuario(username);
 
-	        // Obtener el nombre de usuario del usuario autenticado
-	        String username = authentication.getName();
-	        log.info("Usuario que está creando la comisión: " + username);
+		log.info("[USUARIO CREADOR]" + comision.getUsuarioCreador());
 
-	        
-	        
-	        // Obtener el objeto Usuario desde el servicio de usuarios
-	        Usuario usuarioCreador = usuarioServicio.getUsuario(username);
+		// Obtener los IDs de los participantes seleccionados y convertirlos a Long
+		List<Integer> participantesIds = Arrays.stream(selectedParticipants.split(","))
+				.filter(id -> !id.trim().isEmpty()) // Filtrar elementos vacíos
+				.map(Integer::valueOf).collect(Collectors.toList());
 
+		log.info("IDs de participantes seleccionados: " + participantesIds);
 
+		// Obtener los objetos de participantes seleccionados del servicio de
+		// participantes usando sus IDs
+		List<Participante> participantesSeleccionados = participanteServicio.getParticipantesByIds(participantesIds);
 
-	        
-	        log.info("[USUARIO CREADOR]"+ comision.getUsuarioCreador());
+		log.info("Participantes seleccionados: " + participantesSeleccionados);
 
-	        // Obtener los IDs de los participantes seleccionados y convertirlos a Long
-	        List<Integer> participantesIds = Arrays.stream(selectedParticipants.split(","))
-	                .filter(id -> !id.trim().isEmpty()) // Filtrar elementos vacíos
-	                .map(Integer::valueOf).collect(Collectors.toList());
+		// Establecer los participantes seleccionados en el objeto Comision
+		comision.setParticipantes(participantesSeleccionados);
 
-	        log.info("IDs de participantes seleccionados: " + participantesIds);
+		// Guardar la comisión con los participantes seleccionados
+		comisionServicio.saveComision(comision, usuarioCreador);
 
-	        // Obtener los objetos de participantes seleccionados del servicio de participantes usando sus IDs
-	        List<Participante> participantesSeleccionados = participanteServicio.getParticipantesByIds(participantesIds);
+		log.info("Comisión creada y guardada correctamente");
 
-	        log.info("Participantes seleccionados: " + participantesSeleccionados);
-
-	        // Establecer los participantes seleccionados en el objeto Comision
-	        comision.setParticipantes(participantesSeleccionados);
-
-	        // Guardar la comisión con los participantes seleccionados
-	        comisionServicio.saveComision(comision, usuarioCreador);
-
-	        log.info("Comisión creada y guardada correctamente");
-
-	        return "redirect:/listar";
-	    }
+		return "redirect:/listar";
+	}
 
 }
