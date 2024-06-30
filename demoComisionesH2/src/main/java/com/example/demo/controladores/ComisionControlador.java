@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
 import com.example.demo.servicios.ComisionServicio;
 
@@ -25,19 +26,19 @@ public class ComisionControlador {
 	private ComisionServicio comisionServicio;
 	
 	@GetMapping
-	public List<Comision>	getAllComisiones(){
+	public List<Comision>	getAllComisiones()throws ServiceException{
 		log.info("[GETgetAllComisiones]");
 		return comisionServicio.getAllComsiones();
 	}
 	
 	 @GetMapping("/{id}")
-	 public Optional<Comision> getComisionById(@PathVariable("id") Integer id){
+	 public Optional<Comision> getComisionById(@PathVariable("id") Integer id) throws ServiceException{
 		 log.info("[GETgetComisionById]");
 		 return comisionServicio.getComisionById(id);
 	 }
 	 
 	 @DeleteMapping("/{id}")
-	 public void deleteComision(@PathVariable("id") Integer id) {
+	 public void deleteComision(@PathVariable("id") Integer id) throws ServiceException {
 		 log.info("[DELETEdeleteComision]");
 		 comisionServicio.deleteComision(id);
 	 }

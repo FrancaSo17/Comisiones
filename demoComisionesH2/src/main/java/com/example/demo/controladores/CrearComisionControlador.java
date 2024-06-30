@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
 import com.example.demo.data.Participante;
 import com.example.demo.data.Usuario;
@@ -40,7 +41,7 @@ public class CrearComisionControlador {
 	IServicioParticipantes participanteServicio;
 
 	@GetMapping("/comision")
-	public String mostrarFormulario(Model model) {
+	public String mostrarFormulario(Model model) throws ServiceException {
 		log.info("[GETmostrarFormulario]");
 		model.addAttribute("listar_participantes", participanteServicio.getAllParticipantes());
 		model.addAttribute("comision", new Comision());
@@ -50,12 +51,11 @@ public class CrearComisionControlador {
 	@PostMapping("/guardar")
 	public String guardarComision(@ModelAttribute("comision") Comision comision, BindingResult bindingResult,
 			Model model, @RequestParam("selectedParticipants") String selectedParticipants,
-			Authentication authentication) {
+			Authentication authentication) throws ServiceException{
 		log.info("[POSTguardarComision]");
 		if (authentication == null || !authentication.isAuthenticated()) {
 			throw new IllegalStateException("Controlador No se encontró un usuario autenticado.");
 		}
-
 		// Obtener el nombre de usuario del usuario autenticado
 		String username = authentication.getName();
 		log.info("Usuario que está creando la comisión: " + username);

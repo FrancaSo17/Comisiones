@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
 import com.example.demo.data.Participante;
 import com.example.demo.data.Usuario;
@@ -35,7 +36,7 @@ public class ListarComisionesController {
 	IServicioUsuario usuarioServicio;
 
 	@GetMapping(value = { "/listar" })
-	public String listar(Model model, HttpSession session) {
+	public String listar(Model model, HttpSession session) throws ServiceException{
 		log.info("[GETlistar]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		List<Comision> comisiones = comisionServicio.getAllComsiones();
@@ -63,7 +64,7 @@ public class ListarComisionesController {
 
 	@GetMapping(path = "/visualizar/{id}")
 	public String visualizarComision(@PathVariable(name = "id") Integer id, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) throws ServiceException{
 		log.info("[GETvisualizarComision]");
 		Comision comision = comisionServicio.getComisionById(id).get();
 		List<Participante> participantes = participanteServicio.getParticipanteByComisionId(id);
@@ -73,21 +74,21 @@ public class ListarComisionesController {
 	}
 
 	@GetMapping(path = "/eliminar/{id}")
-	public String borrarComision(@PathVariable(name = "id") Integer id) {
+	public String borrarComision(@PathVariable(name = "id") Integer id) throws ServiceException {
 		log.info("[GETborrarComision]");
 		comisionServicio.deleteComision(id);
 		return "redirect:/listar";
 	}
 
 	@GetMapping(path = "/datosComision/{id}")
-	public String mostrarComision(@PathVariable(name = "id") Integer id) {
+	public String mostrarComision(@PathVariable(name = "id") Integer id) throws ServiceException{
 		log.info("[GETmostrarComision]");
 		comisionServicio.getComisionById(id);
 		return "redirect:/visualizar";
 	}
 
 	@GetMapping(path = "/validarComision/{id}")
-	public String validarComision(@PathVariable(name = "id") Integer id, HttpSession session) {
+	public String validarComision(@PathVariable(name = "id") Integer id, HttpSession session) throws ServiceException{
 		log.info("[GETvalidarComision]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		comisionServicio.validarComision(id, usuario);
@@ -95,7 +96,7 @@ public class ListarComisionesController {
 	}
 
 	@GetMapping(path = "/verificarComision/{id}")
-	public String verificarComision(@PathVariable(name = "id") Integer id, HttpSession session) {
+	public String verificarComision(@PathVariable(name = "id") Integer id, HttpSession session) throws ServiceException {
 		log.info("[GETverificarComision]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		comisionServicio.verificarComision(id, usuario);
@@ -103,7 +104,7 @@ public class ListarComisionesController {
 	}
 
 	@GetMapping(path = "/noValidarComision/{id}")
-	public String noValidarComision(@PathVariable(name = "id") Integer id, HttpSession session) {
+	public String noValidarComision(@PathVariable(name = "id") Integer id, HttpSession session) throws ServiceException {
 		log.info("[GETnoValidarComision]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		comisionServicio.noValidarComision(id, usuario);
@@ -111,7 +112,7 @@ public class ListarComisionesController {
 	}
 
 	@GetMapping(path = "/noVerificarComision/{id}")
-	public String noVerificarComision(@PathVariable(name = "id") Integer id, HttpSession session) {
+	public String noVerificarComision(@PathVariable(name = "id") Integer id, HttpSession session) throws ServiceException{
 		log.info("[GETnoVerificarComision]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		comisionServicio.noVerificarComision(id, usuario);
@@ -121,7 +122,7 @@ public class ListarComisionesController {
 	//No se utiliza
 	@GetMapping(path = "/eliminarParticipante/{comisionId}/{id}")
 	public String borrarParticipante(@PathVariable(name = "comisionId") Integer comisionId,
-			@PathVariable(name = "id") Integer id) {
+			@PathVariable(name = "id") Integer id) throws ServiceException{
 		log.info("[GETborrarParticipante]");
 		participanteServicio.deleteParticipante(id);
 		return "redirect:/visualizar/" + comisionId;

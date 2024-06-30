@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.common.exceptions.CodeError;
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Authorities;
 import com.example.demo.data.Users;
 import com.example.demo.data.Usuario;
@@ -32,7 +34,7 @@ public class UsuarioServicio implements IServicioUsuario {
 
 	@Override
 	@Transactional
-	public void registerUser(Users user, Usuario usuario) {
+	public void registerUser(Users user, Usuario usuario) throws ServiceException{
 		log.info("registerUser");
 		log.debug("user:", user.getUsername());
 		log.debug("usuario:", usuario);
@@ -57,21 +59,34 @@ public class UsuarioServicio implements IServicioUsuario {
 					user.getUsername() + " " + user.getPassword() + "  nivelUsuario" + usuario.getNivelUsuario());
 		} catch (Exception e) {
 			log.error("Error registro", e);
+			throw new ServiceException(CodeError.REGISTRO_NOT_FOUND+ "Error registrando usuario",e);
 		}
 	}
 
 	@Override
-	public Usuario getUsuario(String username) {
-		log.info("getUsuario");
-		return usuarioRepositorio.findUsuarioByUsername(username);
+	public Usuario getUsuario(String username) throws ServiceException {
+	    log.info("getUsuario");
+	    try {
+	        return usuarioRepositorio.findUsuarioByUsername(username);
+	    } catch (Exception e) {
+	        log.error("Error al obtener usuario por nombre de usuario: " + username, e);
+	        throw new ServiceException(CodeError.USUARIO_NOT_FOUND+" Error al obtener usuario por nombre de usuario: " + username, e);
+	    }
 	}
 
-	private PasswordEncoder passwordEncoder() {
-		log.info("passwordEncoder");
-		return new BCryptPasswordEncoder();
+
+	private PasswordEncoder passwordEncoder() throws ServiceException {
+	    log.info("passwordEncoder");
+	    try {
+	        return new BCryptPasswordEncoder();
+	    } catch (Exception e) {
+	        log.error("Error al crear el codificador de contraseñas", e);
+	        throw new ServiceException(CodeError.REGISTRO_NOT_FOUND+ "Error al crear el codificador de contraseñas", e);
+	    }
 	}
 
-	public Usuario authenticate(String username, String password) {
+
+	public Usuario authenticate(String username, String password)  throws ServiceException{
 		log.info("authenticate");
 		return null;
 	}

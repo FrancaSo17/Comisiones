@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
 import com.example.demo.data.Participante;
 import com.example.demo.servicios.IServicioComision;
@@ -38,7 +39,7 @@ public class VisualizarComisionController {
 
 	@GetMapping(path = "/visualizar/{id}")
 	public String visualizarComision(@PathVariable(name = "id") Integer id, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) throws ServiceException{
 		log.info("[GETvisualizarComision]");
 		Comision comision = comisionServicio.getComisionById(id).get();
 		List<Participante> participantes = participanteServicio.getParticipanteByComisionId(id);

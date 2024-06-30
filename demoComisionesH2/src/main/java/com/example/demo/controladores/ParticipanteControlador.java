@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Participante;
 import com.example.demo.servicios.ParticipanteServicio;
 
@@ -27,25 +28,25 @@ public class ParticipanteControlador {
 	    private ParticipanteServicio participanteServicio;
 
 	    @GetMapping
-	    public List<Participante> getAllParticipantes() {
+	    public List<Participante> getAllParticipantes() throws ServiceException{
 	    	log.info("GETgetAllParticipantes]");
 	        return participanteServicio.getAllParticipantes();
 	    }
 
 	    @GetMapping("/{id}")
-	    public Optional<Participante> getParticipanteById(@PathVariable Integer id) {
+	    public Optional<Participante> getParticipanteById(@PathVariable Integer id)throws ServiceException {
 	    	log.info("GETgetParticipanteById]");
 	        return participanteServicio.getParticipanteById(id);
 	    }
 
 	    @PostMapping
-	    public Participante createParticipante(@RequestBody Participante participante) {
+	    public Participante createParticipante(@RequestBody Participante participante)throws ServiceException {
 	    	log.info("POSTcreateParticipante]");
 	        return participanteServicio.saveParticipante(participante);
 	    }
 
 	    @DeleteMapping("/{id}")
-	    public void deleteParticipante(@PathVariable Integer id) {
+	    public void deleteParticipante(@PathVariable Integer id) throws ServiceException{
 	    	log.info("DELETEdeleteParticipante]");
 	    	participanteServicio.deleteParticipante(id);
 	    }

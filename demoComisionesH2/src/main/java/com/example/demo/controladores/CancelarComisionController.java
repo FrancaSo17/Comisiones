@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
 import com.example.demo.data.Participante;
 import com.example.demo.data.Usuario;
@@ -38,12 +39,10 @@ public class CancelarComisionController {
 	@Autowired
 	IServicioUsuario usuarioServicio;
 
-//		@Autowired
-//		IServicioEstado estadoServicio;
 
 	@GetMapping(path = "/{id}")
 	public String visualizarComision(@PathVariable(name = "id") Integer id, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes) throws ServiceException {
 		log.info("[GETvisualizarComision]");
 		Comision comision = comisionServicio.getComisionById(id).get();
 		List<Participante> participantes = participanteServicio.getParticipanteByComisionId(id);
@@ -54,7 +53,7 @@ public class CancelarComisionController {
 
 	@GetMapping(path = "/{id}/comision")
 	public String visualizarComisionCancelada(@PathVariable(name = "id") Integer id, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes)  throws ServiceException{
 		log.info("[GETvisualizarComisionCancelada]");
 		Comision comision = comisionServicio.getComisionById(id).get();
 		List<Participante> participantes = participanteServicio.getParticipanteByComisionId(id);
@@ -65,7 +64,8 @@ public class CancelarComisionController {
 
 	@PostMapping(path = "/guardarComentario")
 	public String guardarComentario(@RequestParam("comisionId") Integer comisionId,
-			@RequestParam("comentario") String comentario, RedirectAttributes redirectAttributes, HttpSession session) {
+			@RequestParam("comentario") String comentario, RedirectAttributes redirectAttributes, 
+			HttpSession session) throws ServiceException {
 		log.info("[POSTguardarComentario]");
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		// Lógica para guardar el comentario asociado a la comisión con ID comisionId

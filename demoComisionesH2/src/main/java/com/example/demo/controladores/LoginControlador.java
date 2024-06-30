@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Users;
 import com.example.demo.data.Usuario;
 import com.example.demo.servicios.UsuarioServicio;
@@ -25,13 +26,13 @@ public class LoginControlador {
 	private UsuarioServicio servicio;
 	
 	@GetMapping(value={"/","/login"})
-	public String login() {
+	public String login() throws ServiceException{
 		log.info("GETlogin");
 		return "login";
 	}
 	
 	@GetMapping("/registro")
-	public String registro(Model model) {
+	public String registro(Model model) throws ServiceException {
 		log.info("GETregistro");
 	    model.addAttribute("user", new Users());
 	    model.addAttribute("usuario", new Usuario());
@@ -39,7 +40,7 @@ public class LoginControlador {
 	}
 	
 	@PostMapping("/login")
-	public String loginSubmit(@RequestParam String username, @RequestParam String password, Model model) {
+	public String loginSubmit(@RequestParam String username, @RequestParam String password, Model model)throws ServiceException {
 		log.info("POSTloginSubmit");
 		log.info("Procesando login para el usuario: " + username);
 	    Usuario usuario = servicio.authenticate(username, password);
@@ -51,7 +52,7 @@ public class LoginControlador {
 	}
 
 	 @PostMapping("/registrar")
-	public String guardarComision(Users user, Usuario usuario, Model model) {
+	public String guardarComision(Users user, Usuario usuario, Model model) throws ServiceException{
 	   log.info("[POSTGuardarUsuarioController]");
 	   log.info("[usuario: ]"+user.getUsername());
 	      servicio.registerUser(user,usuario);
