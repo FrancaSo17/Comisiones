@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Listado de Comisiones</title>
+    <title  th:text="#{listar.tituloPag}"></title>
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Incluir el archivo CSS personalizado -->
@@ -11,164 +11,164 @@
     <div class="container">
         <!-- Flex container for the buttons -->
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <a th:text="'Crear Comision'" th:href="@{/crear/comision}" class="btn btn-secondary btn-sm">Crear Comision</a>
-            <a th:text="'Crear Usuario'" th:href="@{/registro}" class="btn btn-secondary btn-sm">Crear Usuario</a>
-            <a th:text="'Cambiar de Usuario'" th:href="@{/login}" class="btn btn-secondary btn-sm">Cambiar de Usuario</a>
+            <a  th:text="#{listar.CrearComision}" th:href="@{/crear/comision}" class="btn btn-secondary btn-sm"></a>
+            <a th:text="#{listar.CrearUsuario}" th:href="@{/registro}" class="btn btn-secondary btn-sm"></a>
+            <a th:text="#{listar.CambiarUsuario}" th:href="@{/login}" class="btn btn-secondary btn-sm"></a>
         </div>
 
-        <h1 class="text-center">Comisiones Pendientes de Verificación</h1>
+        <h1   th:text="#{listar.ComisionesPendientesVerificar}" class="text-center"></h1>
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Creador</th>
-                    <th scope="col">FechaValidación</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
+                    <th th:text="#{listar.id}" scope="col"></th>
+                    <th th:text="#{listar.titulo}" scope="col"></th>
+                    <th th:text="#{listar.descripcion}" scope="col"></th>
+                    <th th:text="#{listar.prioridad}" scope="col"></th>
+                    <th th:text="#{listar.creador}"scope="col"></th>
+                    <th th:text="#{lista.fechaValidacion}" scope="col"></th>
+                    <th th:text="#{listar.estado}" scope="col"></th>
+                    <th th:text="#{listar.fecha}" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="comision : ${comisionesSinVerificar}">
                     <th th:text="${comision.id}" scope="row">1</th>
-                    <td th:text="${comision.titulo}">Título Comisión</td>
-                    <td th:text="${comision.descripcion}">Descripción</td>
-                    <td th:text="${comision.prioridad}">Prioridad</td>
-                    <td th:text="${comision.usuarioCreador.nombre}">Creador</td>
-                    <td th:text="${comision.fechaValidacion}">Fecha</td>
-                    <td th:text="${comision.estado}">Estado</td>
-                    <td th:text="${comision.fechaComision}">Fecha</td>
-                    <td><a th:text="'visualizar'" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm">Visualizar</a></td>
-                    <td><a th:text="'verificar'" th:href="'/verificarComision/'+${comision.id}" class="btn btn-secondary btn-sm">Verificar</a></td>
-                    <td><a th:text="'noVerificar'" th:href="'/noVerificarComision/'+${comision.id}" class="btn btn-secondary btn-sm">NoVerificar</a></td>
+                    <td th:text="${comision.titulo}"></td>
+                    <td th:text="${comision.descripcion}"></td>
+                    <td th:text="${comision.prioridad}"></td>
+                    <td th:text="${comision.usuarioCreador.nombre}"></td>
+                    <td th:text="${comision.fechaValidacion}"></td>
+                    <td th:text="${comision.estado}"></td>
+                    <td th:text="${comision.fechaComision}"></td>
+                    <td><a th:text="#{listar.visualizar}" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
+                    <td><a th:text="#{listar.verificar}"th:href="'/verificarComision/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
+                    <td><a th:text="#{listar.noVerificar}" th:href="'/noVerificarComision/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center">Comisiones Pendientes de Validación</h1>
+        <h1  th:text="#{listar.pendientesValidacion}" class="text-center"></h1>
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Creador</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
+                     <th th:text="#{listar.id}" scope="col"></th>
+                    <th th:text="#{listar.titulo}" scope="col"></th>
+                    <th th:text="#{listar.descripcion}" scope="col"></th>
+                    <th th:text="#{listar.prioridad}" scope="col"></th>
+                    <th th:text="#{listar.creador}"scope="col"></th>
+                    <th th:text="#{lista.fechaValidacion}" scope="col"></th>
+                    <th th:text="#{listar.estado}" scope="col"></th>
+                    <th th:text="#{listar.fecha}" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="comision : ${comisionesSinValidar}">
                     <th th:text="${comision.id}" scope="row">1</th>
-                    <td th:text="${comision.titulo}">Título Comisión</td>
-                    <td th:text="${comision.descripcion}">Descripción</td>
-                    <td th:text="${comision.prioridad}">Prioridad</td>
-                    <td th:text="${comision.usuarioCreador.nombre}">Creador</td>
-                    <td th:text="${comision.estado}">Estado</td>
-                    <td th:text="${comision.fechaComision}">Fecha</td>
-                    <td><a th:text="'visualizar'" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm">Visualizar</a></td>
-                    <td><a th:text="'validar'" th:href="'/validarComision/'+${comision.id}" class="btn btn-secondary btn-sm">Validar</a></td>
-                    <td><a th:text="'noValidar'" th:href="'/noValidarComision/'+${comision.id}" class="btn btn-secondary btn-sm">NoValidar</a></td>
+                    <td th:text="${comision.titulo}"></td>
+                    <td th:text="${comision.descripcion}"></td>
+                    <td th:text="${comision.prioridad}"></td>
+                    <td th:text="${comision.usuarioCreador.nombre}"></td>
+                    <td th:text="${comision.estado}"></td>
+                    <td th:text="${comision.fechaComision}"></td>
+                    <td><a th:text="#{listar.visualizar}" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
+                    <td><a th:text="#{listar.validar}" th:href="'/validarComision/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
+                    <td><a th:text="#{listar.noValidar}" th:href="'/noValidarComision/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center">Comisiones Aprobadas</h1>
+        <h1 th:text="#{listar.comisionesAprobadas}" class="text-center"></h1>
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Creador</th>
-                    <th scope="col">FechaValidación</th>
-                    <th scope="col">FechaVerificación</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
+                  <th th:text="#{listar.id}" scope="col"></th>
+                    <th th:text="#{listar.titulo}" scope="col"></th>
+                    <th th:text="#{listar.descripcion}" scope="col"></th>
+                    <th th:text="#{listar.prioridad}" scope="col"></th>
+                    <th th:text="#{listar.creador}"scope="col"></th>
+                    <th th:text="#{lista.fechaValidacion}" scope="col"></th>
+                    <th th:text="#{listar.estado}" scope="col"></th>
+                    <th th:text="#{listar.fecha}" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="comision : ${comisionesAprobadas}">
                     <th th:text="${comision.id}" scope="row">1</th>
-                    <td th:text="${comision.titulo}">Título Comisión</td>
-                    <td th:text="${comision.descripcion}">Descripción</td>
-                    <td th:text="${comision.prioridad}">Prioridad</td>
-                    <td th:text="${comision.usuarioCreador.nombre}">Creador</td>
-                    <td th:text="${comision.fechaValidacion}">FechaValidación</td>
-                    <td th:text="${comision.fechaVerificacion}">FechaVerificacion</td>
-                    <td th:text="${comision.estado}">Estado</td>
-                    <td th:text="${comision.fechaComision}">Fecha</td>
-                    <td><a th:text="'visualizar'" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm">Visualizar</a></td>
+                    <td th:text="${comision.titulo}"></td>
+                    <td th:text="${comision.descripcion}"></td>
+                    <td th:text="${comision.prioridad}"></td>
+                    <td th:text="${comision.usuarioCreador.nombre}"></td>
+                    <td th:text="${comision.fechaValidacion}"></td>
+                    <td th:text="${comision.fechaVerificacion}"></td>
+                    <td th:text="${comision.estado}"></td>
+                    <td th:text="${comision.fechaComision}"></td>
+                    <td><a th:text="#{listar.visualizar}" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm">Visualizar</a></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center">Comisiones Canceladas</h1>
+        <h1 th:text="#{listar.comisionesCanceladas}" class="text-center"></h1>
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Creador</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
+                   <th th:text="#{listar.id}" scope="col"></th>
+                    <th th:text="#{listar.titulo}" scope="col"></th>
+                    <th th:text="#{listar.descripcion}" scope="col"></th>
+                    <th th:text="#{listar.prioridad}" scope="col"></th>
+                    <th th:text="#{listar.creador}"scope="col"></th>
+                    <th th:text="#{lista.fechaValidacion}" scope="col"></th>
+                    <th th:text="#{listar.estado}" scope="col"></th>
+                    <th th:text="#{listar.fecha}" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="comision : ${comisionesCanceladas}">
                     <th th:text="${comision.id}" scope="row">1</th>
-                    <td th:text="${comision.titulo}">Título Comisión</td>
-                    <td th:text="${comision.descripcion}">Descripción</td>
-                    <td th:text="${comision.prioridad}">Prioridad</td>
-                    <td th:text="${comision.usuarioCreador.nombre}">Creador</td>
-                    <td th:text="${comision.estado}">Estado</td>
-                    <td th:text="${comision.fechaComision}">Fecha</td>
-                    <td><a th:text="'visualizar'" th:href="'cancelar/'+${comision.id}+'/comision'" class="btn btn-secondary btn-sm">Visualizar</a></td>
+                    <td th:text="${comision.titulo}"></td>
+                    <td th:text="${comision.descripcion}"></td>
+                    <td th:text="${comision.prioridad}"></td>
+                    <td th:text="${comision.usuarioCreador.nombre}"></td>
+                    <td th:text="${comision.estado}"></td>
+                    <td th:text="${comision.fechaComision}"></td>
+                    <td><a th:text="#{listar.visualizar}" th:href="'cancelar/'+${comision.id}+'/comision'" class="btn btn-secondary btn-sm"></a></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="container">
-        <h1 class="text-center">Todas las Comisiones</h1>
+        <h1  th:text="#{listar.todasComisiones}" class="text-center"></h1>
         <table class="table table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Creador</th>
-                    <th scope="col">FechaValidación</th>
-                    <th scope="col">FechaVerificación</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
+                  <th th:text="#{listar.id}" scope="col"></th>
+                    <th th:text="#{listar.titulo}" scope="col"></th>
+                    <th th:text="#{listar.descripcion}" scope="col"></th>
+                    <th th:text="#{listar.prioridad}" scope="col"></th>
+                    <th th:text="#{listar.creador}"scope="col"></th>
+                    <th th:text="#{lista.fechaValidacion}" scope="col"></th>
+                    <th th:text="#{listar.estado}" scope="col"></th>
+                    <th th:text="#{listar.fecha}" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="comision : ${listar}">
                     <th th:text="${comision.id}" scope="row">1</th>
-                    <td th:text="${comision.titulo}">Título Comisión</td>
-                    <td th:text="${comision.descripcion}">Descripción</td>
-                    <td th:text="${comision.prioridad}">Prioridad</td>
-                    <td th:text="${comision.usuarioCreador.nombre}">Creador</td>
-                    <td th:text="${comision.fechaValidacion}">FechaValidación</td>
-                    <td th:text="${comision.fechaVerificacion}">FechaVerificación</td>
-                    <td th:text="${comision.estado}">Estado</td>
-                    <td th:text="${comision.fechaComision}">Fecha</td>
-                    <td><a th:text="'visualizar'" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm">Visualizar</a></td>
+                    <td th:text="${comision.titulo}"></td>
+                    <td th:text="${comision.descripcion}"></td>
+                    <td th:text="${comision.prioridad}"></td>
+                    <td th:text="${comision.usuarioCreador.nombre}"></td>
+                    <td th:text="${comision.fechaValidacion}"></td>
+                    <td th:text="${comision.fechaVerificacion}"></td>
+                    <td th:text="${comision.estado}"></td>
+                    <td th:text="${comision.fechaComision}"></td>
+                    <td><a th:text="#{listar.visualizar}" th:href="'visualizar/'+${comision.id}" class="btn btn-secondary btn-sm"></a></td>
                 </tr>
             </tbody>
         </table>

@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <title th:text="#{login.titulo}"></title>
     <link rel="stylesheet" th:href="@{/style2.css}">
 </head>
 <body>
     <div class="login-wrapper">
-        <h1 class="tituloLogin">GESTOR DE COMISIONES </h1>
+        <h1 th:text="#{login.h1}" class="tituloLogin"></h1>
         <div class="login-container">
             <h2>Login</h2>
             <form th:action="@{/login}" method="post" class="login-form">
                 <div class="form-group">
-                    <label for="nombre">Nombre:</label>
+                    <label th:text="#{login.nombre}" for="nombre"></label>
                     <input type="text" id="nombre" name="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label   th:text="#{login.clave}" for="password"></label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button th:text="#{login.titulo}" type="submit" class="btn btn-primary"></button>
                 </div>
             </form>
             <div th:if="${error}" class="error-message">
-                <p th:text="${error}">error</p>
+                <p th:text="${error}"></p>
             </div>
-            <a th:text="'Registrar'" th:href="@{/registro}" class="btn btn-secondary">Registrar</a>
+            <a  th:text="#{login.registrar}" th:href="@{/registro}" class="btn btn-secondary"></a>
         </div>
     </div>
 </body>
