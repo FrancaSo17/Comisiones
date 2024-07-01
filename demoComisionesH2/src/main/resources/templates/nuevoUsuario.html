@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Crear Usuario</title>
-<!-- Incluir Bootstrap CSS -->
-<!-- Incluir Bootstrap CSS -->
+<title th:text="#{nuevoUsuario.titulo}" ></title>
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- Incluir el archivo CSS personalizado -->
@@ -18,38 +17,38 @@
 
 	<div class="container">
 		<div>
-			<a th:text="'Volver'" th:href="'/'+'listar'"
-				class="btn btn-secondary btn-sm">Volver</a>
+			<a th:text="#{nuevoUsuario.volver}" th:href="'/'+'login'"
+				class="btn btn-secondary btn-sm"></a>
 		</div>
 		<form th:action="@{/registrar}" method="post">
 
 			<div class="form-group">
-				<label for="titulo">Username:</label> <input type="text"
+				<label th:text="#{nuevoUsuario.username}" for="titulo"></label> <input type="text"
 					class="form-control" id="username" name="username"
 					required>
 			</div>
 
 
 			<div class="form-group">
-				<label for="contraseña">Contraseña</label> <input type="text"
+				<label th:text="#{nuevoUsuario.contraseña}" for="contraseña"></label> <input type="text"
 					class="form-control" id="password" name="password"
 					 required>
 			</div>
 			
 			<div class="form-group">
-				<label for="titulo">Nombre:</label> <input type="text"
+				<label th:text="#{nuevoUsuario.nombre}" for="titulo"></label> <input type="text"
 					class="form-control" id="nombre" name="nombre"
 					required>
 			</div>
 
 			<div class="form-group">
-				<label for="prioridad">Nivel usuario</label> <input type="number"
+				<label th:text="#{nuevoUsuario.nivel}"  for="prioridad"></label> <input type="number"
 					class="form-control" id="nivelUsuario" name="nivelUsuario"
 					min="1" max="9" required>
 			</div>
 
 
-			<button type="submit" class="btn btn-primary">Guardar</button>
+			<button th:text="#{nuevoUsuario.guardar}" type="submit" class="btn btn-primary"></button>
 		</form>
 	</div>
 </body>
