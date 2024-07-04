@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -69,6 +71,8 @@ public class Comision {
 	@JoinColumn(name = "USUARIO_CANCELADOR_ID")
 	private Usuario usuarioCancelador;
 	
+	@OneToMany(mappedBy = "comision", cascade= CascadeType.ALL, orphanRemoval= true)
+	private List<Documento> documentos;
 	
 	public Usuario getUsuarioCancelador() {
 		return usuarioCancelador;

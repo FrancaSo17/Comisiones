@@ -183,20 +183,6 @@ public class ComisionServicio implements IServicioComision {
 
 
 
-	@Override
-	public List<Comision> listComision() throws ServiceException {
-	    log.info("[listComision]");
-	    
-	    try {
-	        // Suponiendo que se debería retornar una lista de comisiones
-	        return comisionRepositorio.findAll();
-	    } catch (Exception e) {
-	        log.error("Error listando las comisiones", e);
-	        throw new ServiceException(CodeError.COMISION_NOT_FOUND, e);
-	    }
-	}
-
-
 	////
 
 	@Override

@@ -9,8 +9,6 @@ import com.example.demo.data.Usuario;
 
 public interface IServicioComision {
 
-	public List<Comision> listComision() throws ServiceException;
-
 	public List<Comision> getAllComsiones() throws ServiceException;
 
 	public Optional<Comision> getComisionById(Integer id) throws ServiceException;

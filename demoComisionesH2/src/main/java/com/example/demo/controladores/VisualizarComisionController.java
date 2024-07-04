@@ -14,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.common.exceptions.ServiceException;
 import com.example.demo.data.Comision;
+import com.example.demo.data.Documento;
 import com.example.demo.data.Participante;
 import com.example.demo.servicios.IServicioComision;
+import com.example.demo.servicios.IServicioDocumento;
 import com.example.demo.servicios.IServicioParticipantes;
 import com.example.demo.servicios.IServicioUsuario;
 
@@ -34,8 +36,8 @@ public class VisualizarComisionController {
 	@Autowired
 	IServicioUsuario usuarioServicio;
 
-//	@Autowired
-//	IServicioEstado estadoServicio;
+	@Autowired
+	IServicioDocumento documentoServicio;
 
 	@GetMapping(path = "/visualizar/{id}")
 	public String visualizarComision(@PathVariable(name = "id") Integer id, Model model,
@@ -43,8 +45,10 @@ public class VisualizarComisionController {
 		log.info("[GETvisualizarComision]");
 		Comision comision = comisionServicio.getComisionById(id).get();
 		List<Participante> participantes = participanteServicio.getParticipanteByComisionId(id);
+		List<Documento> documentos = documentoServicio.getDocumentosByComisionId(id);
 		model.addAttribute("comision", comision);
 		model.addAttribute("participantes", participantes);
+		model.addAttribute("documentos", documentos);
 		return "visualizar";
 	}
 }
